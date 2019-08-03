@@ -7,6 +7,19 @@ Pytalk is a module for bidirectional communication between Node and Python.
 It lets you create Python process, and communicate with it via standard streams. Every message passed through pytalk gets serialized into JSON.
 Before starting the process, Pytalk modifies the Python code, instantiating an event loop and allowing you to send and recieve messages with `pytalk_emit`, `pytalk_on` or registering Python method with `pytalk_method`.
 
+
+### Fork edits:
+
+[`OG NPM package`](https://www.npmjs.com/package/pytalk/v/1.0.5) (github repo was removed)
+
+This fork allows you to run python scripts as root by passing the option `root`
+
+```Javascript
+let worker = pytalk.worker('worker.py', {sudo: true});
+```
+
+
+
 ### Install
 Install through npm
 ```bash
@@ -66,6 +79,7 @@ or, which is the same `pytalk.worker(scriptPath, options)`
 * `stdout` - callback called when Python script prints something. Default is `console.log`.
 * `stderr` - callback called on Python's raised errors. Default is `console.log`.
 * `async` - If true, PyObject's methods become async. Default is `false`. ([example](https://github.com/tsim0/pytalk.js/blob/master/test/test.js#L285))
+* `sudo` - If true, the python script is ran as root (linux only)
 
 #####```Worker.method(methodName)```
 Returns a `function(arg1, ..., argN, callback)`. `args` are the args passed to the Python method, registered using ```@pytalk_method(methodName)``` decorator. `callback` is a error-first function, called when Python method finishes its work. Use this when you need async version of some sync Python function. 
